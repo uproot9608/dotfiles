@@ -1,0 +1,22 @@
+# Fonts
+font-size = 16
+
+# Theme
+theme = catppuccin-frappe
+# theme = gruvbox
+cursor-style = bar
+background-opacity = 0.99
+
+# Mouse
+mouse-hide-while-typing = true
+
+# Other
+auto-update =  off
+
+# # The config file consists of simple key-value pairs,
+# # separated by equals signs.
+# font-family = Iosevka
+# window-padding-x = 2
+#
+# # Empty values are used to reset config keys to default.
+# key =
