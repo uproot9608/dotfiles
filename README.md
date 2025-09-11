@@ -9,7 +9,7 @@ Ensure you have git and stow installed on your system
 ## Mac
 
 ### Git
-Cones preinstalled
+Comes preinstalled
 
 ### Stow
 
