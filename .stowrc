@@ -1,0 +1,6 @@
+--target=$XDG_CONFIG_HOME
+--ignore=.stowrc
+--ignore=dot-stowrc
+--ignore=.zshrc
+--ignore=DS_Store
+--dotfiles
