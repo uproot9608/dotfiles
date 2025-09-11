@@ -2,10 +2,9 @@
 font-size = 16
 
 # Theme
-theme = catppuccin-frappe
-# theme = gruvbox
+theme = catppuccin-mocha
 cursor-style = bar
-background-opacity = 0.99
+background-opacity = 0.95
 
 # Mouse
 mouse-hide-while-typing = true
