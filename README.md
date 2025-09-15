@@ -43,4 +43,5 @@ then use GNU stow to create symlinks
 
 ```
 $ stow .
+$ ln -s $(pwd)/.zprofile $HOME/.zprofile
 ```

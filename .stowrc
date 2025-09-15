@@ -2,5 +2,7 @@
 --ignore=.stowrc
 --ignore=dot-stowrc
 --ignore=.zshrc
+--ignore=.zprofile
+--ignore=user.js
 --ignore=DS_Store
 --dotfiles
