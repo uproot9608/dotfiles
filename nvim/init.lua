@@ -1,3 +1,4 @@
+require("config.lazy")
 -- Set <space> as the leader key
 --  NOTE: Must happen before plugins are loaded (otherwise wrong leader will be used)
 vim.g.mapleader = ' '
@@ -14,6 +15,8 @@ vim.o.wrap = false
 -- Tabs 
 vim.o.expandtab = false 
 vim.o.tabstop = 4 
+vim.o.shiftwidth = 4 
+
 
 -- Show mode (not needed if with status line)
 vim.o.showmode = true
