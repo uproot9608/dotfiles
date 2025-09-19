@@ -1,6 +1,5 @@
 --target=$XDG_CONFIG_HOME
 --ignore=.stowrc
---ignore=dot-stowrc
 --ignore=.zprofile
 --ignore=user.js
 --ignore=DS_Store
