@@ -65,6 +65,15 @@ vim.o.cursorline = true
 -- 999 to always stay in the middle
 vim.o.scrolloff = 12
 
+-- Visual block mode virtual blocks
+vim.o.virtualedit = "block"
+
+-- Incremental changes 
+vim.o.inccommand = "split"
+
+-- True colors 
+vim.o.termguicolors = true
+
 -- Raise a dialog asking if you wish to save the current file(s)
 vim.o.confirm = true
 
