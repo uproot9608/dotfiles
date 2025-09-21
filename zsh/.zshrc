@@ -67,6 +67,7 @@ export PATH=$PATH:$GOPATH/bin
 export BUNDLE_USER_CONFIG="$XDG_CONFIG_HOME"/bundle
 export BUNDLE_USER_CACHE="$XDG_CACHE_HOME"/bundle
 export BUNDLE_USER_PLUGIN="$XDG_DATA_HOME"/bundle
+# not working
 export HOMEBREW_CASK_OPTS=--no-quarantine 
 
 # somenitelno no ok
@@ -90,13 +91,15 @@ alias k=kubectl
 alias cat=bat
 alias ls=lsd
 alias c=clear
-alias ll="eza -lAh"
+alias ll="eza -lAh --git"
 alias dump="brew bundle dump --global --force --describe"
 alias wget="wget --hsts-file=$XDG_DATA_HOME/wget-hsts"
 eval "$(zoxide init --cmd cd zsh)"
 
 #mode 
 bindkey -e
+bindkey '^p' history-search-backward
+bindkey '^n' history-search-forward
 # bindkey -M menuselect 'h' vi-backward-char
 # bindkey -M menuselect 'j' vi-down-line-or-history
 # bindkey -M menuselect 'k' vi-up-line-or-history
