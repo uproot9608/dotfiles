@@ -16,6 +16,7 @@ source "${ZINIT_HOME}/zinit.zsh"
 zinit light zsh-users/zsh-syntax-highlighting
 zinit light zsh-users/zsh-completions
 zinit light zsh-users/zsh-autosuggestions
+zinit light Aloxaf/fzf-tab
 
 # Add in snippets
 zinit snippet OMZP::sudo
@@ -41,6 +42,11 @@ if [ "$TERM_PROGRAM" != "Apple_Terminal" ]; then
   eval "$(oh-my-posh init zsh --config $OHMYPOSH_CONFIG)"
 fi
 
+# Emacs mode 
+bindkey -e
+bindkey '^p' history-search-backward
+bindkey '^n' history-search-forward
+
 # History
 HISTSIZE=5000
 HISTFILE="${XDG_STATE_HOME}"/zsh/history
@@ -54,14 +60,20 @@ setopt hist_save_no_dups
 setopt hist_ignore_dups
 setopt hist_find_no_dups
 
-# TODO needs work 
+# Show hidden files and directories
+setopt globdots
 # Completion styling
 zstyle ':completion:*' matcher-list 'm:{a-z}={A-Za-z}'
 zstyle ':completion:*' list-colors "${(s.:.)LS_COLORS}"
+# fzf completions
+zstyle ':completion:*' menu no
+zstyle ':fzf-tab:complete:cd:*' fzf-preview 'ls --color $realpath'
+zstyle ':fzf-tab:complete:__zoxide_z:*' fzf-preview 'ls --color $realpath'
 
 # TODO rework 
 export LANG=en_US.UTF-8
 export PYTHON_HISTORY=$XDG_STATE_HOME/python_history
+# zshenv?
 export GOPATH=$XDG_DATA_HOME/go
 export PATH=$PATH:$GOPATH/bin
 export BUNDLE_USER_CONFIG="$XDG_CONFIG_HOME"/bundle
@@ -87,22 +99,16 @@ fi
 # Compilation flags
 # export ARCHFLAGS="-arch x86_64"
 
+alias c=clear
 alias k=kubectl
 alias cat=bat
-alias ls=lsd
-alias c=clear
+alias ls=eza
 alias ll="eza -lAh --git"
 alias dump="brew bundle dump --global --force --describe"
 alias wget="wget --hsts-file=$XDG_DATA_HOME/wget-hsts"
-eval "$(zoxide init --cmd cd zsh)"
 
-#mode 
-bindkey -e
-bindkey '^p' history-search-backward
-bindkey '^n' history-search-forward
-# bindkey -M menuselect 'h' vi-backward-char
-# bindkey -M menuselect 'j' vi-down-line-or-history
-# bindkey -M menuselect 'k' vi-up-line-or-history
-# bindkey -M menuselect 'l' vi-forward-char
+# Shell integrations
+eval "$(fzf --zsh)"
+eval "$(zoxide init --cmd cd zsh)"
 
 fastfetch
