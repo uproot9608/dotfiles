@@ -1,6 +1,3 @@
-# Disable Apple's "save/restore shell state" feature.
-SHELL_SESSIONS_DISABLE=1
-
 ZINIT_HOME="${XDG_DATA_HOME:-${HOME}/.local/share}/zinit/zinit.git"
 
 # Download Zinit, if it's not there yet
@@ -74,8 +71,6 @@ zstyle ':fzf-tab:complete:__zoxide_z:*' fzf-preview 'ls --color $realpath'
 export LANG=en_US.UTF-8
 export PYTHON_HISTORY=$XDG_STATE_HOME/python_history
 # zshenv?
-export GOPATH=$XDG_DATA_HOME/go
-export PATH=$PATH:$GOPATH/bin
 export BUNDLE_USER_CONFIG="$XDG_CONFIG_HOME"/bundle
 export BUNDLE_USER_CACHE="$XDG_CACHE_HOME"/bundle
 export BUNDLE_USER_PLUGIN="$XDG_DATA_HOME"/bundle
@@ -83,18 +78,11 @@ export BUNDLE_USER_PLUGIN="$XDG_DATA_HOME"/bundle
 export HOMEBREW_CASK_OPTS=--no-quarantine 
 
 # somenitelno no ok
-export SSH_AUTH_SOCK=$HOME/.bitwarden-ssh-agent.sock
-if [ -f ".bitwarden-ssh-agent.sock" ]; then
-  echo "Found bitworden ssh socket. Enabling it."
-  # export SSH_AUTH_SOCK=$HOME/.bitwarden-ssh-agent.sock
+# export SSH_AUTH_SOCK=${HOME}/.bitwarden-ssh-agent.sock
+if [ -S "${HOME}/.bitwarden-ssh-agent.sock" ]; then
+  echo "Found bitwarden ssh socket. Enabling it."
+  export SSH_AUTH_SOCK=$HOME/.bitwarden-ssh-agent.sock
 fi
-
-# Preferred editor for local and remote sessions
-# if [[ -n $SSH_CONNECTION ]]; then
-#   export EDITOR='vim'
-# else
-#   export EDITOR='mvim'
-# fi
 
 # Compilation flags
 # export ARCHFLAGS="-arch x86_64"
