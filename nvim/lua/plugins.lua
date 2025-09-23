@@ -20,17 +20,18 @@ require("lazy").setup({
 	-- Theme
 	{
 		"catppuccin/nvim",
-		name = "catppuccin",
+		name = "catppuccin.nvim",
 		config = function()
 			vim.cmd.colorscheme("catppuccin")
 		end,
 	},
+
 	-- Treesitter
 	{
 		"nvim-treesitter/nvim-treesitter",
 		config = function()
-			require("nvim-treesitter.configs").setup {
-				ensure_installed = { "c", "lua", "vim", "vimdoc", "query", "markdown", "markdown_inline", "python" },
+			require("nvim-treesitter.configs").setup({
+				ensure_installed = { "c", "lua", "vim", "vimdoc", "query", "markdown", "markdown_inline", "python", "go" },
 
 				highlight = {
 					enable = true,
@@ -44,7 +45,69 @@ require("lazy").setup({
 						node_decremental = "<Leader>sd",
 					},
 				},
-			}
+			})
 		end,
+	},
+
+	-- LSP
+	{
+		"neovim/nvim-lspconfig",
+	},
+
+	{
+		"mason-org/mason.nvim",
+		opts = {}
+	},
+
+	{
+		"mason-org/mason-lspconfig.nvim",
+		dependencies = {
+			{ "mason-org/mason.nvim", opts = {} },
+			"neovim/nvim-lspconfig",
+		},
+		config = function()
+			require("mason-lspconfig").setup({
+				ensure_installed = {"lua_ls", "gopls", "basedpyright" },
+			})
+		end,
+    },
+
+	{
+		"saghen/blink.cmp",
+		dependencies = { 'rafamadriz/friendly-snippets' },
+
+		version = '1.*',
+		opts = {
+			keymap = { preset = "super-tab" },
+
+			appearance = {
+				nerd_font_variant = "mono"
+			},
+
+			completion = { documentation = { auto_show = true } },
+
+			sources = {
+				default = {"lazydev", 'lsp', 'path', 'snippets', 'buffer' },
+				providers = {
+					lazydev = {
+						name = "LazyDev",
+						module = "lazydev.integrations.blink",
+						-- make lazydev completions top priority (see `:h blink.cmp`)
+						score_offset = 100,
+					},
+				},
+			},
+			fuzzy = { implementation = "prefer_rust_with_warning" }
+		},
+		opts_extend = { "sources.default" }
+	},
+	{
+		"folke/lazydev.nvim",
+		ft = "lua",
+		opts = {
+			library = {
+				{ path = "${3rd}/luv/library", words = { "vim%.uv" } },
+			},
+		},
 	},
 })

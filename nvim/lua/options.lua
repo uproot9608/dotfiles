@@ -1,6 +1,6 @@
 -- Leader key
 vim.g.mapleader = " "
-vim.g.maplocalleader = " "
+-- vim.g.maplocalleader = " "
 
 -- Fonts
 vim.g.have_nerd_font = true 
@@ -74,3 +74,9 @@ vim.o.termguicolors = true
 
 -- Raise a dialog asking if you wish to save the current file(s)
 vim.o.confirm = true
+
+-- Set up diagnostics
+
+vim.diagnostic.config {
+	virtual_lines = true
+}

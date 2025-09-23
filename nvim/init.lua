@@ -1,5 +1,5 @@
-require("plugins")
 require("options")
+require("plugins")
 
 -- Clear highlights on search when pressing <Esc> in normal mode
 vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>')
@@ -12,3 +12,4 @@ vim.api.nvim_create_autocmd('TextYankPost', {
     vim.hl.on_yank()
   end,
 })
+
