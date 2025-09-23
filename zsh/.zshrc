@@ -31,7 +31,7 @@ OHMYPOSH_CONFIG="$XDG_CONFIG_HOME/ohmyposh/config.toml"
 if [ ! -f "$OHMYPOSH_CONFIG" ]; then
    echo "Oh-my-posh config not found. Creating one..."
    mkdir -p "$(dirname $OHMYPOSH_CONFIG)"
-   curl -s -o "$OHMYPOSH_CONFIG" https://raw.githubusercontent.com/JanDeDobbeleer/oh-my-posh/refs/heads/main/themes/robbyrussell.omp.json 
+   curl -s -o "$OHMYPOSH_CONFIG" https://raw.githubusercontent.com/uproot9608/dotfiles/refs/heads/main/ohmyposh/config.toml
 fi
 
 # Standard terminal has issues displaying the ANSI characters correctly
@@ -92,7 +92,7 @@ alias k=kubectl
 alias cat=bat
 alias ls=eza
 alias ll="eza -lAh --git"
-alias dump="brew bundle dump --global --force --describe"
+alias dump="brew bundle dump --global --force"
 alias wget="wget --hsts-file=$XDG_DATA_HOME/wget-hsts"
 
 # Shell integrations
