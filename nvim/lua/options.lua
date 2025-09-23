@@ -3,7 +3,7 @@ vim.g.mapleader = " "
 -- vim.g.maplocalleader = " "
 
 -- Fonts
-vim.g.have_nerd_font = true 
+vim.g.have_nerd_font = true
 
 -- Make line numbers default
 vim.o.number = true
@@ -11,10 +11,10 @@ vim.o.relativenumber = true
 vim.o.wrap = false
 
 -- Tabs 
-vim.o.expandtab = false 
-vim.o.tabstop = 4 
-vim.o.shiftwidth = 4 
-
+vim.o.expandtab = true
+vim.o.tabstop = 4
+vim.o.softtabstop = 4
+vim.o.shiftwidth = 4
 
 -- Show mode (not needed if with status line)
 vim.o.showmode = true
