@@ -154,3 +154,4 @@ cask "wechat"
 cask "yandex-music"
 # Gecko based web browser
 cask "zen"
+brew "uv"
