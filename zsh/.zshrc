@@ -63,9 +63,14 @@ setopt globdots
 zstyle ':completion:*' matcher-list 'm:{a-z}={A-Za-z}'
 zstyle ':completion:*' list-colors "${(s.:.)LS_COLORS}"
 # fzf completions
-zstyle ':completion:*' menu no
-zstyle ':fzf-tab:complete:cd:*' fzf-preview 'ls --color $realpath'
-zstyle ':fzf-tab:complete:__zoxide_z:*' fzf-preview 'ls --color $realpath'
+if (( $+commands[fzf] )); then
+    zstyle ':completion:*' menu no
+    zstyle ':fzf-tab:complete:cd:*' fzf-preview 'ls --color $realpath'
+    zstyle ':fzf-tab:complete:__zoxide_z:*' fzf-preview 'ls --color $realpath'
+fi
+# zstyle ':completion:*' menu no
+# zstyle ':fzf-tab:complete:cd:*' fzf-preview 'ls --color $realpath'
+# zstyle ':fzf-tab:complete:__zoxide_z:*' fzf-preview 'ls --color $realpath'
 
 # TODO rework 
 export LANG=en_US.UTF-8
@@ -80,7 +85,6 @@ export HOMEBREW_CASK_OPTS=--no-quarantine
 # somenitelno no ok
 # export SSH_AUTH_SOCK=${HOME}/.bitwarden-ssh-agent.sock
 if [ -S "${HOME}/.bitwarden-ssh-agent.sock" ]; then
-  echo "Found bitwarden ssh socket. Enabling it."
   export SSH_AUTH_SOCK=$HOME/.bitwarden-ssh-agent.sock
 fi
 
@@ -92,11 +96,17 @@ alias k=kubectl
 alias cat=bat
 alias ls=eza
 alias ll="eza -lAh --git"
+alias lg=lazygit
 alias dump="brew bundle dump --global --force"
 alias wget="wget --hsts-file=$XDG_DATA_HOME/wget-hsts"
+ff (){
+    cd ${HOME}/repos/$(ls -A ${HOME}/repos | fzf) && ll
+}
+
+if [[ "$(uname)" == "Darwin" ]]; then
+    alias sha256sum="shasum -a 256" 
+fi
 
 # Shell integrations
 eval "$(fzf --zsh)"
 eval "$(zoxide init --cmd cd zsh)"
-
-fastfetch
