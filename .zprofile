@@ -10,8 +10,13 @@ if [[ -f "/opt/homebrew/bin/brew" ]] then
   eval "$(/opt/homebrew/bin/brew shellenv)"
 fi
 
+if [[ ! -d "$HOME/.local/bin" ]] then
+    mkdir $HOME/.local/bin
+fi
+
 export GOPATH=$XDG_DATA_HOME/go
 export PATH=$PATH:$GOPATH/bin
+export PATH=$PATH:$HOME/.local/bin
 ZDOTDIR=${XDG_CONFIG_HOME:-$"HOME/.config"}/zsh
 
 export LESSHISTFILE="-"

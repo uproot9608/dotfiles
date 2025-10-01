@@ -2,6 +2,7 @@ ZINIT_HOME="${XDG_DATA_HOME:-${HOME}/.local/share}/zinit/zinit.git"
 
 # Download Zinit, if it's not there yet
 if [ ! -d "$ZINIT_HOME" ]; then
+    ehco "Zinit not found. Dowloading..."
    mkdir -p "$(dirname $ZINIT_HOME)"
    git clone https://github.com/zdharma-continuum/zinit.git "$ZINIT_HOME"
 fi
@@ -24,6 +25,16 @@ zinit snippet OMZP::command-not-found
 # Load completions
 autoload -Uz compinit && compinit
 zinit cdreplay -q
+
+# Downloading Oh-my-posh
+if ! command -v oh-my-posh >/dev/null; then 
+    if [ ! -d "$HOME/.local/bin" ]; then 
+        echo "Downloading Oh-my-posh..."
+        curl -s https://ohmyposh.dev/install.sh | bash -s -- -d $HOME/.local/bin
+    else 
+        echo ".local/bin is not in the PATH"
+    fi
+fi 
 
 # Prompt configuration
 OHMYPOSH_CONFIG="$XDG_CONFIG_HOME/ohmyposh/config.toml"
@@ -99,6 +110,7 @@ alias ll="eza -lAh --git"
 alias lg=lazygit
 alias dump="brew bundle dump --global --force"
 alias wget="wget --hsts-file=$XDG_DATA_HOME/wget-hsts"
+
 ff (){
     cd ${HOME}/repos/$(ls -A ${HOME}/repos | fzf) && ll
 }
