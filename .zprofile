@@ -17,7 +17,7 @@ fi
 export GOPATH=$XDG_DATA_HOME/go
 export PATH=$PATH:$GOPATH/bin
 export PATH=$PATH:$HOME/.local/bin
-ZDOTDIR=${XDG_CONFIG_HOME:-$"HOME/.config"}/zsh
+export ZDOTDIR=${XDG_CONFIG_HOME}/zsh
 
 export LESSHISTFILE="-"
 
@@ -26,3 +26,4 @@ if [[ "$(uname)" == "Darwin" ]]; then
    SHELL_SESSIONS_DISABLE=1
    # export SHELL_SESSIONS_DISABLE=1 ????
 fi
+
