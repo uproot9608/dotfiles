@@ -1,5 +1,6 @@
 version = 3
 final_space = true
+console_title_template = '{{ .Shell }} in {{ .Folder }}'
 
 [palette]
   blue = '#89B4FA'
@@ -9,31 +10,43 @@ final_space = true
   pink = '#F5C2E7'
 
 [upgrade]
-  source = 'cdn'
-  interval = '168h'
   auto = false
-  notice = false
+  notice = true
+  source = 'github'
+  interval = '168h'
 
 [[blocks]]
   type = 'prompt'
   alignment = 'left'
+  newline = true
 
   [[blocks.segments]]
-    template = '{{ .Path }} '
+    type = "python"
+    style = "plain"
+    display_default = true
+    display_mode = "environment"
+    folder_name_fallback = true
+    default_venv_names = [ "venv", ".venv", "env", ".env" ]
     foreground = 'p:pink'
+    background = 'transparent'
+    template = "({{ if .Error }}{{ .Error }}{{ else }}{{ if .Venv }}{{ .Venv }} {{ end }} {{ .Full }}{{ end }}) "
+
+  [[blocks.segments]]
     type = 'path'
     style = 'plain'
+    foreground = 'p:pink'
+    template = '{{ .Path }} '
 
     [blocks.segments.properties]
+      style = 'full'
       folder_icon = '....'
       home_icon = '~'
-      style = 'agnoster_short'
 
   [[blocks.segments]]
-    template = '{{ .HEAD }} '
-    foreground = 'p:lavender'
     type = 'git'
     style = 'plain'
+    foreground = 'p:lavender'
+    template = '{{ .HEAD }} '
 
     [blocks.segments.properties]
       branch_icon = ' '
@@ -47,8 +60,30 @@ final_space = true
       revert_icon = ' '
       tag_icon = ' '
 
+[[blocks]]
+  type = 'prompt'
+  alignment = 'left'
+  newline = true
+
   [[blocks.segments]]
-    template = ''
-    foreground = 'p:closer'
     type = 'text'
     style = 'plain'
+    foreground_templates = [
+      "{{if gt .Code 0}}red{{end}}",
+      "{{if eq .Code 0}}magenta{{end}}",
+    ]
+    background = 'transparent'
+    template = '❯'
+
+[transient_prompt]
+  foreground_templates = [
+    "{{if gt .Code 0}}red{{end}}",
+    "{{if eq .Code 0}}magenta{{end}}",
+  ]
+  background = 'transparent'
+  template = '❯ '
+
+[secondary_prompt]
+  foreground = 'magenta'
+  background = 'transparent'
+  template = '❯❯ '
