@@ -11,7 +11,7 @@ console_title_template = '{{ .Shell }} in {{ .Folder }}'
 
 [upgrade]
   auto = false
-  notice = true
+  notice = false
   source = 'github'
   interval = '168h'
 
