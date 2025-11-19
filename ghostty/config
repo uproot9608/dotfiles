@@ -4,7 +4,7 @@ font-size = 16
 # Theme
 theme = Catppuccin Mocha
 cursor-style = bar
-background-opacity = 0.85
+background-opacity = 0.90
 
 # Mouse
 mouse-hide-while-typing = true
