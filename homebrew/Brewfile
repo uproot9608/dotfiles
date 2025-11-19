@@ -1,3 +1,4 @@
+tap "hashicorp/tap"
 tap "homebrew/autoupdate"
 tap "homebrew/bundle"
 tap "homebrew/services"
@@ -8,150 +9,82 @@ tap "osx-cross/arm"
 tap "osx-cross/avr"
 tap "qmk/qmk"
 tap "teamookla/speedtest"
-# GNU internationalization (i18n) and localization (l10n) library
 brew "gettext"
-# Clone of cat(1) with syntax highlighting and Git integration
 brew "bat"
-# Resource monitor. C++ version and continuation of bashtop and bpytop
 brew "btop"
-# Emacs dependency management
 brew "cask"
-# Modern, maintained replacement for ls
+brew "docker"
+brew "docker-compose"
 brew "eza"
-# Like neofetch, but much faster because written mostly in C
 brew "fastfetch"
-# Simple, fast and user-friendly alternative to find
 brew "fd"
-# Play, record, convert, and stream audio and video
 brew "ffmpeg"
-# Command-line fuzzy finder written in Go
 brew "fzf"
-# GitHub command-line tool
 brew "gh"
-# Audit git repos for secrets
+brew "git"
 brew "gitleaks"
-# Open source programming language to build simple/reliable/efficient software
 brew "go"
-# Update of iperf: measures TCP, UDP, and SCTP bandwidth
+brew "hugo"
 brew "iperf3"
-# Lightweight and flexible command-line JSON processor
 brew "jq"
-# Tool to move from `docker-compose` to Kubernetes
 brew "kompose"
-# Kubernetes command-line interface
 brew "kubernetes-cli"
-# Simple terminal UI for git commands
+brew "lazydocker"
 brew "lazygit"
-# LLVM's OpenMP runtime library
 brew "libomp"
-# Clone of ls with colorful output, file type icons, and more
-# Mac App Store command-line interface
 brew "mas"
-# Ambitious Vim-fork focused on extensibility and agility
 brew "neovim"
-# Port scanning utility for large networks
 brew "nmap"
-# Interactive GPU process monitor
 brew "nvtop"
-# Prompt theme engine for any shell
-brew "oh-my-posh"
-# Password manager
 brew "pass"
-# Pinentry for GPG on Mac
 brew "pinentry-mac"
-# Tool for managing OCI containers and pods
 brew "podman"
-# Interpreted, interactive, object-oriented programming language
 brew "python@3.12"
-# Search tool like grep and The Silver Searcher
+brew "python@3.14"
 brew "ripgrep"
-# Organize software neatly under a single directory tree (e.g. /usr/local)
 brew "stow"
-# Terminal multiplexer
 brew "tmux"
-# Sends magic packets to wake up network-devices
+brew "uv"
 brew "wakeonlan"
-# Internet file retriever
 brew "wget"
-# Tools for the WireGuard secure network tunnel
 brew "wireguard-tools"
-# Blazing fast terminal file manager written in Rust, based on async I/O
 brew "yazi"
-# Shell extension to navigate your filesystem faster
 brew "zoxide"
-# Netbird project.
+brew "hashicorp/tap/terraform"
 brew "netbirdio/tap/netbird"
-# Quantum Mechanical Keyboard (QMK) Firmware
 brew "qmk/qmk/qmk"
-# Ookla Speedtest
 brew "teamookla/speedtest/speedtest"
-# Tool to flash OS images to SD cards & USB drives
 cask "balenaetcher"
-# Desktop password and login vault
+cask "betterdisplay"
 cask "bitwarden"
-# Control USB Cameras from an app
 cask "cameracontroller"
-# Calendar software
 cask "fantastical"
-# Web browser
 cask "firefox"
 cask "font-jetbrains-mono-nerd-font"
-# Terminal emulator that uses platform-native UI and GPU acceleration
 cask "ghostty"
-# Web browser
 cask "google-chrome"
-# Open-source video transcoder
 cask "handbrake-app"
-# Utility to hide menu bar items
 cask "hiddenbar"
-# Set up your HP printer
 cask "hp-easy-start"
-# Web browser
-cask "librewolf"
-# Customise mouse behavior
 cask "linearmouse"
-# Open-source cross-platform alternative to AirDrop
 cask "localsend"
-# Remote desktop client
 cask "microsoft-remote-desktop"
-# Tool to control external monitor brightness & volume
 cask "monitorcontrol"
-# GameStream client
 cask "moonlight"
-# VPN client
 cask "mullvad-vpn"
-# Knowledge base that works on top of a local folder of plain text Markdown files
 cask "obsidian"
-# Document editor
 cask "onlyoffice"
-# Browse, manage, inspect containers and images
 cask "podman-desktop"
-# Imaging utility to install operating systems to a microSD card
 cask "raspberry-pi-imager"
-# Control your tools with a few keystrokes
 cask "raycast"
-# Move and resize windows using keyboard shortcuts or snap areas
 cask "rectangle"
-# Open source virtual/remote desktop application
-cask "rustdesk"
-# Instant messaging application focusing on security
 cask "signal"
-# Application to control your PlayStation 4 or PlayStation 5
 cask "sony-ps-remote-play"
-# Sync and backup service to Synology NAS drives
 cask "synology-drive"
-# Tool to manage Synology NAS's across a LAN
 cask "synologyassistant"
-# Messaging app with a focus on speed and security
 cask "telegram"
-# Customizable email client
 cask "thunderbird"
-# Multimedia player
 cask "vlc"
-# Free messaging and calling application
 cask "wechat"
-# Tune in to Yandex Music and get personal recommendations
-cask "yandex-music"
-# Gecko based web browser
 cask "zen"
-brew "uv"
+go "github.com/bootdotdev/bootdev"
