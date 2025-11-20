@@ -32,6 +32,22 @@ console_title_template = '{{ .Shell }} in {{ .Folder }}'
     template = "({{ if .Error }}{{ .Error }}{{ else }}{{ if .Venv }}{{ .Venv }} {{ end }} {{ .Full }}{{ end }}) "
 
   [[blocks.segments]]
+    type = "docker"
+    style = "powerline"
+    powerline_symbol = ""
+    foreground = "#000000"
+    background = "#0B59E7"
+    template = "  {{ .Context }} "
+
+  [[blocks.segments]]
+    type = "session"
+    style = "powerline"
+    powerline_symbol = ""
+    foreground = "#000000"
+    background = "#0B59E7"
+    template = "{{ if .SSHSession }} {{ .HostName }}{{ end }}"
+
+  [[blocks.segments]]
     type = 'path'
     style = 'plain'
     foreground = 'p:pink'
