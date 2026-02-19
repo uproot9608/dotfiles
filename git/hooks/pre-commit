@@ -1,0 +1,2 @@
+gitleaks git --pre-commit --staged --verbose --redact
+exit $?

@@ -1,0 +1,44 @@
+#!/usr/bin/env bash
+
+commit_msg_file="$1"
+commit_source="$2"  # 'message', 'template', 'merge', etc.
+
+# Skip if message already has ticket
+if [ "$commit_source" = "message" ] || [ "$commit_source" = "commit" ]; then
+  if grep -qE '^[A-Z]{2,10}-[0-9]+(:| )' "$commit_msg_file"; then
+    exit 0
+  fi
+fi
+
+# Skip merges, etc.
+if [ "$commit_source" = "merge" ]; then
+  exit 0
+fi
+
+# Extract ticket from branch name 
+branch_name=$(git rev-parse --abbrev-ref HEAD 2>/dev/null)
+ticket=$(echo "$branch_name" | grep -oE '[A-Z]{2,10}-[0-9]+' | head -1 | tr '[:lower:]' '[:upper:]')
+
+if [ -z "$ticket" ]; then
+  # Optional: echo "Warning: No ticket found in branch name" >&2
+  exit 0
+fi
+
+# Read current message
+current_msg=$(cat "$commit_msg_file")
+
+# Avoid double-prefixing
+if echo "$current_msg" | grep -qE "^$ticket(:| )"; then
+  exit 0
+fi
+
+# Prepend ticket (with colon + space – adjust as needed)
+echo "$ticket: $current_msg" > "$commit_msg_file"
+
+# Optional: add blank line + ticket in body too (for traceability)
+# {
+#   echo ""
+#   echo "$ticket"
+# } >> "$commit_msg_file"
+
+exit 0

@@ -23,6 +23,7 @@
     compression = 9
     whitespace = error
     preloadindex = true 
+    hooksPath = ~/repos/dotfiles/git/hooks
 [advice]
     statusHints = false
 [diff]
@@ -57,4 +58,4 @@
     insteadOf = "gh:"
 
 [url "git@github.com:uproot9608/"]
-    insteadOf = "upr:"   
+    insteadOf = "mygh:"   
