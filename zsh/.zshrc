@@ -87,7 +87,6 @@ export BUNDLE_USER_CONFIG="$XDG_CONFIG_HOME"/bundle
 export BUNDLE_USER_CACHE="$XDG_CACHE_HOME"/bundle
 export BUNDLE_USER_PLUGIN="$XDG_DATA_HOME"/bundle
 # not working
-export HOMEBREW_CASK_OPTS=--no-quarantine 
 
 # somenitelno no ok
 # export SSH_AUTH_SOCK=${HOME}/.bitwarden-ssh-agent.sock
@@ -106,6 +105,7 @@ alias ll="eza -lAh --git"
 alias lg=lazygit
 alias dump="brew bundle dump --global --force"
 alias wget="wget --hsts-file=$XDG_DATA_HOME/wget-hsts"
+alias weather="curl wttr.in"
 
 ff (){
     cd ${HOME}/repos/$(ls -A ${HOME}/repos | fzf) && ll
