@@ -8,6 +8,7 @@ console_title_template = '{{ .Shell }} in {{ .Folder }}'
   lavender = '#B4BEFE'
   os = '#ACB0BE'
   pink = '#F5C2E7'
+  docker_blue = '#0B59E7'
 
 [upgrade]
   auto = false
@@ -36,7 +37,7 @@ console_title_template = '{{ .Shell }} in {{ .Folder }}'
     style = "powerline"
     powerline_symbol = ""
     foreground = "#000000"
-    background = "#0B59E7"
+    background = "p:docker_blue"
     template = "  {{ .Context }} "
 
   [[blocks.segments]]
@@ -54,7 +55,7 @@ console_title_template = '{{ .Shell }} in {{ .Folder }}'
     template = '{{ .Path }} '
 
     [blocks.segments.properties]
-      style = 'full'
+      style = 'unique'
       folder_icon = '....'
       home_icon = '~'
 
@@ -68,13 +69,21 @@ console_title_template = '{{ .Shell }} in {{ .Folder }}'
       branch_icon = ' '
       cherry_pick_icon = ' '
       commit_icon = ' '
-      fetch_status = false
+      fetch_status = true
       fetch_upstream_icon = false
       merge_icon = ' '
       no_commits_icon = ' '
       rebase_icon = ' '
       revert_icon = ' '
       tag_icon = ' '
+
+  [[blocks.segments]]
+    type = 'executiontime'
+    style = 'plain'
+    foreground = 'yellow'
+    template = ' <lightYellow>took</> {{ .FormattedMs }}'
+    [blocks.segments.properties]
+      threshold = 2000 # Only shows if the command takes > 2 seconds
 
 [[blocks]]
   type = 'prompt'

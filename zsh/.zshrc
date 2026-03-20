@@ -1,120 +1,151 @@
-ZINIT_HOME="${XDG_DATA_HOME:-${HOME}/.local/share}/zinit/zinit.git"
+# ------------------------------------------------------------------------------
+# 1. Plugin Manager (Zinit) Setup & Turbo Mode
+# ------------------------------------------------------------------------------
+ZINIT_HOME="${XDG_DATA_HOME}/zinit/zinit.git"
 
-# Download Zinit, if it's not there yet
 if [ ! -d "$ZINIT_HOME" ]; then
-   echo "Zinit not found. Dowloading..."
+   echo "🚀 Installing Zinit..."
    mkdir -p "$(dirname $ZINIT_HOME)"
    git clone https://github.com/zdharma-continuum/zinit.git "$ZINIT_HOME"
 fi
 
-# Source/Load zinit
 source "${ZINIT_HOME}/zinit.zsh"
 
-# Add in zsh plugins
-zinit light zsh-users/zsh-syntax-highlighting
-zinit light zsh-users/zsh-completions
-zinit light zsh-users/zsh-autosuggestions
+# Fast-loading plugins (Immediate)
 zinit light Aloxaf/fzf-tab
-
-# Add in snippets
 zinit snippet OMZP::sudo
 zinit snippet OMZP::command-not-found
-# zinit snippet OMZP::kubectl
-# zinit snippet OMZP::kubectx
 
-# Load completions
-autoload -Uz compinit && compinit
+# Turbo-loaded plugins (Background load to prevent shell lag)
+zinit wait'0' lucid for \
+    zsh-users/zsh-completions \
+    zsh-users/zsh-autosuggestions \
+    blockf \
+    zsh-users/zsh-syntax-highlighting
+
+# ------------------------------------------------------------------------------
+# 2. Completion System (XDG Compliant & Fast)
+# ------------------------------------------------------------------------------
+# Move zcompdump to Cache and only rebuild every 24h
+export ZSH_COMPDUMP="$XDG_CACHE_HOME/zsh/zcompdump"
+mkdir -p "$(dirname "$ZSH_COMPDUMP")"
+
+autoload -Uz compinit
+if [[ -n "$ZSH_COMPDUMP"(#qN.mh+24) ]]; then
+  compinit -d "$ZSH_COMPDUMP"
+else
+  compinit -C -d "$ZSH_COMPDUMP"
+fi
 zinit cdreplay -q
 
-# Downloading Oh-my-posh
-if ! command -v oh-my-posh >/dev/null; then 
-    echo "Downloading Oh-my-posh..."
-    curl -s https://ohmyposh.dev/install.sh | bash -s -- -d $HOME/.local/bin
-fi
+# Completion Styling
+# zstyle ':completion:*' matcher-list 'm:{a-z}={A-Za-z}'
+# zstyle ':completion:*' list-colors "${(s.:.)LS_COLORS}"
+# zstyle ':fzf-tab:complete:cd:*' fzf-preview 'eza -1 --color=always $realpath'
+zstyle ':completion:*' menu select # Use arrow keys to navigate completions
+zstyle ':completion:*' matcher-list 'm:{a-z}={A-Za-z}' 'r:|[._-]=* r:|=*' 'l:|=* r:|=*'
+zstyle ':completion:*' list-colors "${(s.:.)LS_COLORS}"
+zstyle ':fzf-tab:complete:cd:*' fzf-preview 'eza -1 --color=always $realpath'
 
-# Prompt configuration
+# ------------------------------------------------------------------------------
+# 3. Prompt (Oh-My-Posh)
+# ------------------------------------------------------------------------------
 OHMYPOSH_CONFIG="$XDG_CONFIG_HOME/ohmyposh/config.toml"
-# Download oh-my-posh config, if it's not there yet
-if [ ! -f "$OHMYPOSH_CONFIG" ]; then
-   echo "Oh-my-posh config not found. Creating one..."
+
+if [[ ! -f "$OHMYPOSH_CONFIG" ]]; then
+   echo "📥 Fetching Oh-my-posh config..."
    mkdir -p "$(dirname $OHMYPOSH_CONFIG)"
    curl -s -o "$OHMYPOSH_CONFIG" https://raw.githubusercontent.com/uproot9608/dotfiles/refs/heads/main/ohmyposh/config.toml
 fi
 
-# Standard terminal has issues displaying the ANSI characters correctly
-if [ "$TERM_PROGRAM" != "Apple_Terminal" ]; then
+if [[ "$TERM_PROGRAM" != "Apple_Terminal" ]]; then
   eval "$(oh-my-posh init zsh --config $OHMYPOSH_CONFIG)"
 fi
 
-# Emacs mode 
-bindkey -e
+# ------------------------------------------------------------------------------
+# 4. History (XDG State Compliant)
+# ------------------------------------------------------------------------------
+HISTSIZE=10000
+SAVEHIST=10000
+HISTFILE="${XDG_STATE_HOME}/zsh/history"
+mkdir -p "$(dirname "$HISTFILE")"
+
+setopt SHARE_HISTORY          # Share history between tabs
+setopt HIST_IGNORE_ALL_DUPS   # Don't record duplicates
+setopt HIST_REDUCE_BLANKS     # Clean up whitespace
+setopt HIST_IGNORE_SPACE      # Don't record commands starting with space
+setopt INC_APPEND_HISTORY     # Immediate append
+
+# ------------------------------------------------------------------------------
+# 5. Keybindings & Options
+# ------------------------------------------------------------------------------
+bindkey -e 
 bindkey '^p' history-search-backward
 bindkey '^n' history-search-forward
 
-# History
-HISTSIZE=5000
-HISTFILE="${XDG_STATE_HOME}"/zsh/history
-SAVEHIST=$HISTSIZE
-HISTDUP=erase
-setopt appendhistory
-setopt sharehistory
-setopt hist_ignore_space
-setopt hist_ignore_all_dups
-setopt hist_save_no_dups
-setopt hist_ignore_dups
-setopt hist_find_no_dups
+setopt globdots               # Show hidden files in globs
+setopt AUTO_CD                # Just type a directory name to cd into it
+setopt MENU_COMPLETE        # List completions on first tab press
+setopt AUTO_LIST            # Automatically list choices on ambiguous completion
+setopt COMPLETE_IN_WORD     # Complete from both ends of a word
 
-# Show hidden files and directories
-setopt globdots
-# Completion styling
-zstyle ':completion:*' matcher-list 'm:{a-z}={A-Za-z}'
-zstyle ':completion:*' list-colors "${(s.:.)LS_COLORS}"
-# fzf completions
-if (( $+commands[fzf] )); then
-    zstyle ':completion:*' menu no
-    zstyle ':fzf-tab:complete:cd:*' fzf-preview 'ls --color $realpath'
-    zstyle ':fzf-tab:complete:__zoxide_z:*' fzf-preview 'ls --color $realpath'
-fi
-# zstyle ':completion:*' menu no
-# zstyle ':fzf-tab:complete:cd:*' fzf-preview 'ls --color $realpath'
-# zstyle ':fzf-tab:complete:__zoxide_z:*' fzf-preview 'ls --color $realpath'
+# ------------------------------------------------------------------------------
+# 6. Aliases & Functions
+# ------------------------------------------------------------------------------
+alias c='clear'
+alias k='kubectl'
+alias cat='bat'
+alias ls='eza --icons'
+alias ll='eza -lAh --git --icons'
+alias lg='lazygit'
+alias dump='brew bundle dump --global --force'
+alias weather='curl wttr.in'
+alias pb='pbcopy'
+alias myip="curl -s https://ifconfig.me"
 
-# TODO rework 
-export LANG=en_US.UTF-8
-export PYTHON_HISTORY=$XDG_STATE_HOME/python_history
-# zshenv?
-export BUNDLE_USER_CONFIG="$XDG_CONFIG_HOME"/bundle
-export BUNDLE_USER_CACHE="$XDG_CACHE_HOME"/bundle
-export BUNDLE_USER_PLUGIN="$XDG_DATA_HOME"/bundle
-# not working
+alias rm='rm -i'
+alias cp='cp -iv'
+alias mv='mv -iv'
+alias mkdir='mkdir -p'
 
-# somenitelno no ok
-# export SSH_AUTH_SOCK=${HOME}/.bitwarden-ssh-agent.sock
-if [ -S "${HOME}/.bitwarden-ssh-agent.sock" ]; then
-  export SSH_AUTH_SOCK=$HOME/.bitwarden-ssh-agent.sock
-fi
+alias -g G='| grep --color=auto'
+alias -g L='| less'
+alias -g H='| head'
+alias -g T='| tail'
+alias -g B='| bat'
 
-# Compilation flags
-# export ARCHFLAGS="-arch x86_64"
+# Improved Repo Jumper
+ff() {
+    local repo_dir="${HOME}/repos"
+    
+    # 1. Safety check: does the directory even exist?
+    if [[ ! -d "$repo_dir" ]]; then
+        echo "❌ Directory $repo_dir not found."
+        return 1
+    fi
 
-alias c=clear
-alias k=kubectl
-alias cat=bat
-alias ls=eza
-alias ll="eza -lAh --git"
-alias lg=lazygit
-alias dump="brew bundle dump --global --force"
-alias wget="wget --hsts-file=$XDG_DATA_HOME/wget-hsts"
-alias weather="curl wttr.in"
+    local repo
+    # 2. Use --preview-window=hidden or a custom eza preview to override the global bat preview
+    repo=$(eza -1 "$repo_dir" | fzf \
+        --height 40% \
+        --reverse \
+        --prompt="📁 Go to repo > " \
+        --preview "eza -T -L 2 --color=always $repo_dir/{}" \
+        --preview-window="right:50%:border-left")
 
-ff (){
-    cd ${HOME}/repos/$(ls -A ${HOME}/repos | fzf) && ll
+    # 3. If a selection was made, jump and list
+    if [[ -n "$repo" ]]; then
+        cd "$repo_dir/$repo" && ll
+    fi
 }
 
-if [[ "$(uname)" == "Darwin" ]]; then
-    alias sha256sum="shasum -a 256" 
-fi
-
-# Shell integrations
+# ------------------------------------------------------------------------------
+# 7. Integrations & Auth (Sourced Last)
+# ------------------------------------------------------------------------------
 eval "$(fzf --zsh)"
 eval "$(zoxide init --cmd cd zsh)"
+
+# Bitwarden SSH Agent check (Using -S for socket check)
+if [[ -S "${HOME}/.bitwarden-ssh-agent.sock" ]]; then
+  export SSH_AUTH_SOCK="$HOME/.bitwarden-ssh-agent.sock"
+fi
