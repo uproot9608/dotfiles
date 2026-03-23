@@ -67,7 +67,7 @@ require("lazy").setup({
 		},
 		config = function()
 			require("mason-lspconfig").setup({
-				ensure_installed = {"lua_ls", "gopls", "basedpyright" },
+				ensure_installed = {"lua_ls", "gopls", "ruff" },
 			})
 		end,
     },
@@ -97,7 +97,7 @@ require("lazy").setup({
 					},
 				},
 			},
-			fuzzy = { implementation = "prefer_rust_with_warning" }
+            -- fuzzy = { implementation = "prefer_rust_with_warning" }
 		},
 		opts_extend = { "sources.default" }
 	},
