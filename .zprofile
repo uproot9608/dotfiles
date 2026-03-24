@@ -44,9 +44,11 @@ fi
 # Prevent duplicate entries in PATH
 typeset -U path
 
-# Prepend custom bins to prioritize them
+# Prepend custom bins and homebrew to prioritize them
 path=(
     "$HOME/.local/bin"
+    "/opt/homebrew/bin"
+    "/opt/homebrew/sbin"
     "$GOPATH/bin"
     $path
 )
