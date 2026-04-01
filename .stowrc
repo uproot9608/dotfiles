@@ -1,5 +1,4 @@
 --target=$XDG_CONFIG_HOME
-# --target=/home/yourusername/.config
 
 --ignore=.stowrc
 --ignore=.zprofile
